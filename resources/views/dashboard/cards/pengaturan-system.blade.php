@@ -184,6 +184,7 @@
                 if (res.ok && (result.success || result.status === 'success' || result.message)) {
                     showAlert('Berhasil!', result.message || 'Pengaturan berhasil disimpan.', 'success');
                     fetchPengaturan();
+                    window.dispatchEvent(new Event('tanaman-aktif-updated'));
                 } else {
                     showAlert('Gagal!', result.message || 'Terjadi kesalahan saat menyimpan.', 'error');
                 }

@@ -114,8 +114,8 @@
 
     async function fetchPengaturan() {
         try {
-            const res = await fetch('{{ url('/api/update-batas') }}');
-            if (!res.ok) return;
+            const res = await fetch('{{ url('/api/batas') }}', { headers: { Accept: 'application/json' }, cache: 'no-store' });
+            if (!res.ok) throw new Error(`Gagal mengambil pengaturan (${res.status})`);
             const data = await res.json();
 
             // Tampilkan ambang batas jika elemen input ada
@@ -124,32 +124,40 @@
             setInputValue('interval', data.interval);
 
             // Ambil tanaman aktif
-            if (data.tanaman_aktif) {
-                fetchTanamanAktif(data.tanaman_aktif);
-            } else {
-                fetchTanamanAktif();
-            }
+            await fetchTanamanAktif();
         } catch (error) {
             console.debug("Gagal memuat pengaturan:", error);
-            fetchTanamanAktif(); // Fallback fetch
+            await fetchTanamanAktif(); // Tetap coba ambil tanaman aktif
         }
     }
 
-    async function fetchTanamanAktif(id) {
+    async function fetchTanamanAktif() {
         try {
-            const res = await fetch('{{ url('/api/tanaman/aktif') }}');
-            if (!res.ok) return;
+            const res = await fetch('{{ url('/api/tanaman/aktif') }}', { headers: { Accept: 'application/json' }, cache: 'no-store' });
+            if (res.status === 404) {
+                tampilkanTanpaTanaman();
+                return;
+            }
+            if (!res.ok) throw new Error(`Gagal mengambil tanaman aktif (${res.status})`);
             const data = await res.json();
 
             if (data.success && data.data) {
                 const tanaman = data.data;
 
                 // Format Tanggal Indonesia
+                const parseTanggalLokal = (dateString) => {
+                    if (!dateString) return null;
+                    const [year, month, day] = dateString.slice(0, 10).split('-').map(Number);
+                    if (!year || !month || !day) return null;
+                    const date = new Date(year, month - 1, day);
+                    return isNaN(date.getTime()) ? null : date;
+                };
+
                 const formatTanggal = (dateString) => {
                     if (!dateString) return '-';
                     const options = { day: 'numeric', month: 'short', year: 'numeric' };
-                    const tanggal = new Date(dateString);
-                    return isNaN(tanggal.getTime()) ? '-' : tanggal.toLocaleDateString('id-ID', options);
+                    const tanggal = parseTanggalLokal(dateString);
+                    return tanggal ? tanggal.toLocaleDateString('id-ID', options) : '-';
                 };
 
                 // Tampilkan info dasar
@@ -160,8 +168,9 @@
 
                 // Hitung Usia (Hari)
                 const today = new Date();
-                const semaiDate = tanaman.hst ? new Date(tanaman.hst) : null;
-                const tanamDate = tanaman.hss ? new Date(tanaman.hss) : null;
+                today.setHours(0, 0, 0, 0);
+                const semaiDate = parseTanggalLokal(tanaman.hst);
+                const tanamDate = parseTanggalLokal(tanaman.hss);
 
                 let numUsiaSemai = 0;
                 let numUsiaTanam = 0;
@@ -214,19 +223,41 @@
                     updatePrediksiPanen(tanaman, tanamDate);
                 }
             } else {
-                setText('namaTanaman', 'Tidak ada tanaman aktif');
-                setText('namaIlmiah', '-');
-                setText('tanggalSemai', '-');
-                setText('tanggalTanam', '-');
-                setText('fasePertumbuhan', 'Belum disetting');
+                tampilkanTanpaTanaman();
             }
         } catch (error) {
             console.debug("Gagal memuat tanaman aktif:", error);
+            setText('namaTanaman', 'Gagal memuat data tanaman');
+            setText('namaIlmiah', '-');
+            setText('tanggalSemai', '-');
+            setText('tanggalTanam', '-');
+            setText('usiaSemai', '-');
+            setText('usiaTanam', '-');
+            setText('fasePertumbuhan', 'Periksa koneksi server');
         }
     }
 
+    function tampilkanTanpaTanaman() {
+        setText('namaTanaman', 'Tidak ada tanaman aktif');
+        setText('namaIlmiah', '-');
+        setText('tanggalSemai', '-');
+        setText('tanggalTanam', '-');
+        setText('usiaSemai', '-');
+        setText('usiaTanam', '-');
+        setText('progressPercent', '0%');
+        setText('fasePertumbuhan', 'Belum disetting');
+        const progressBar = document.getElementById('progressBar');
+        if (progressBar) progressBar.style.width = '0%';
+    }
+
     // Eksekusi saat DOM Siap
-    document.addEventListener('DOMContentLoaded', fetchPengaturan);
+    window.addEventListener('tanaman-list-updated', fetchPengaturan);
+    window.addEventListener('tanaman-aktif-updated', fetchPengaturan);
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', fetchPengaturan, { once: true });
+    } else {
+        fetchPengaturan();
+    }
 })();
 </script>
 @endpush
