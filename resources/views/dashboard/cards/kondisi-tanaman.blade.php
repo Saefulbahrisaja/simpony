@@ -114,7 +114,7 @@
 
     async function fetchPengaturan() {
         try {
-            const res = await fetch('{{ url('/api/batas') }}');
+            const res = await fetch('{{ url('/api/update-batas') }}');
             if (!res.ok) return;
             const data = await res.json();
 

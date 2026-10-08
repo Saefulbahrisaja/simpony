@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\SensorController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DiseaseDetectionController;
+use App\Http\Controllers\Api\TanamanController;
 use Illuminate\Support\Facades\Http;
 
 
@@ -16,9 +17,10 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/batas', [SensorController::class, 'getBatas']);
 Route::post('/update-batas', [SensorController::class, 'updateBatas']);
+Route::get('/tanaman/aktif', [SensorController::class, 'getTanamanAktif']);
+Route::apiResource('tanaman', TanamanController::class);
 Route::get('/sensor/export', [SensorController::class, 'export']);
 Route::get('/sensor/filter', [SensorController::class, 'filterData']);
-Route::get('/tanaman/aktif', [SensorController::class, 'getTanamanAktif']);
 
 // Deteksi penyakit daun dari aplikasi Android
 Route::get('/sensor/latest', [DiseaseDetectionController::class, 'latestSensor']);

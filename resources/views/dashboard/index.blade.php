@@ -4,58 +4,74 @@
 
 @section('content')
 
-<div class="space-y-4 max-w-7xl mx-auto px-2 sm:px-4">
-    {{-- STATUS RINGKAS (COMPACT) --}}
-    <section class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        {{-- TDS --}}
-        <div class="flex items-center justify-between p-3.5 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl text-white shadow-sm hover:shadow transition">
-            <div class="flex items-center space-x-3">
-                <div class="p-2.5 bg-white/20 rounded-lg backdrop-blur-sm">
-                    <i class="fas fa-droplet text-lg"></i>
+<div class="space-y-6 max-w-7xl mx-auto px-3 sm:px-6 py-2">
+    
+    {{-- HEADER DASHBOARD --}}
+    <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-2 border-b border-gray-200/60">
+        <div>
+            <h1 class="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">Dashboard Hidroponik</h1>
+            <p class="text-xs sm:text-sm text-gray-500">Pemantauan real-time dan kontrol kondisi sistem hidroponik</p>
+        </div>
+        <div class="flex items-center gap-2 self-start sm:self-auto bg-emerald-50 text-emerald-700 text-xs font-semibold px-3 py-1.5 rounded-full border border-emerald-200/60">
+            <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            Sistem Aktif
+        </div>
+    </header>
+
+    {{-- STATUS RINGKAS (METRICS SUMMARY) --}}
+    <section class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {{-- CARD TDS --}}
+        <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-between group">
+            <div class="flex items-center space-x-3.5">
+                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <i class="fas fa-droplet text-xl"></i>
                 </div>
                 <div>
-                    <p class="text-xs font-medium text-emerald-100">TDS Terakhir</p>
-                    <p class="text-xl font-bold tracking-tight">
+                    <p class="text-xs font-semibold uppercase tracking-wider text-gray-400">TDS Terakhir</p>
+                    <p class="text-2xl font-extrabold text-gray-900 leading-none mt-1">
                         <span id="dashboardTds">{{ $latestSensor?->tds !== null ? number_format($latestSensor->tds, 0) : '-' }}</span>
-                        <span class="text-xs font-normal opacity-90">ppm</span>
+                        <span class="text-xs font-semibold text-gray-500 ml-0.5">ppm</span>
                     </p>
                 </div>
             </div>
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-200 animate-pulse"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 ring-4 ring-emerald-50"></span>
         </div>
 
-        {{-- SUHU AIR --}}
-        <div class="flex items-center justify-between p-3.5 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl text-white shadow-sm hover:shadow transition">
-            <div class="flex items-center space-x-3">
-                <div class="p-2.5 bg-white/20 rounded-lg backdrop-blur-sm">
-                    <i class="fas fa-temperature-half text-lg"></i>
+        {{-- CARD SUHU AIR --}}
+        <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-between group">
+            <div class="flex items-center space-x-3.5">
+                <div class="w-12 h-12 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <i class="fas fa-temperature-half text-xl"></i>
                 </div>
                 <div>
-                    <p class="text-xs font-medium text-teal-100">Suhu Air</p>
-                    <p class="text-xl font-bold tracking-tight">
+                    <p class="text-xs font-semibold uppercase tracking-wider text-gray-400">Suhu Air</p>
+                    <p class="text-2xl font-extrabold text-gray-900 leading-none mt-1">
                         <span id="dashboardSuhu">{{ $latestSensor?->suhu !== null ? number_format($latestSensor->suhu, 1) : '-' }}</span>
-                        <span class="text-xs font-normal opacity-90">°C</span>
+                        <span class="text-xs font-semibold text-gray-500 ml-0.5">°C</span>
                     </p>
                 </div>
             </div>
-            <span class="w-2.5 h-2.5 rounded-full bg-teal-200 animate-pulse"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-sky-500 ring-4 ring-sky-50"></span>
         </div>
 
-        {{-- KELEMBABAN --}}
-        <div class="flex items-center justify-between p-3.5 bg-gradient-to-br from-cyan-600 to-emerald-700 rounded-xl text-white shadow-sm hover:shadow transition">
-            <div class="flex items-center space-x-3">
-                <div class="p-2.5 bg-white/20 rounded-lg backdrop-blur-sm">
-                    <i class="fas fa-wind text-lg"></i>
+        {{-- CARD KELEMBABAN --}}
+        <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-between group">
+            <div class="flex items-center space-x-3.5">
+                <div class="w-12 h-12 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <i class="fas fa-wind text-xl"></i>
                 </div>
                 <div>
-                    <p class="text-xs font-medium text-cyan-100">Kelembaban</p>
-                    <p class="text-xl font-bold tracking-tight">
+                    <p class="text-xs font-semibold uppercase tracking-wider text-gray-400">Kelembaban</p>
+                    <p class="text-2xl font-extrabold text-gray-900 leading-none mt-1">
                         <span id="dashboardHumidity">{{ $latestSensor?->kelembaban !== null ? number_format($latestSensor->kelembaban, 1) : '-' }}</span>
-                        <span class="text-xs font-normal opacity-90">%</span>
+                        <span class="text-xs font-semibold text-gray-500 ml-0.5">%</span>
                     </p>
                 </div>
             </div>
-            <span class="w-2.5 h-2.5 rounded-full bg-cyan-200 animate-pulse"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-teal-500 ring-4 ring-teal-50"></span>
         </div>
     </section>
 
@@ -64,34 +80,45 @@
         @include('dashboard.cards.status-system')
     </section>
 
-    {{-- TANAMAN & LIVE SENSOR --}}
-    <section class="grid grid-cols-1 xl:grid-cols-3 gap-4">
-        <div class="xl:col-span-1">@include('dashboard.cards.kondisi-tanaman')</div>
-        <div class="xl:col-span-2">@include('dashboard.metrics.live-sensor')</div>
+    {{-- ACTIVE CROP, MANAJEMEN TANAMAN & TELEMETRY --}}
+    <section class="grid grid-cols-1 xl:grid-cols-3 gap-6 items-start">
+        <div class="xl:col-span-1">
+            @include('dashboard.cards.kondisi-tanaman')
+        </div>
+        <div class="xl:col-span-2 space-y-4">
+            @include('dashboard.cards.manajemen-tanaman')
+            @include('dashboard.metrics.live-sensor')
+        </div>
     </section>
 
     {{-- FILTER + GRAFIK --}}
-    <section class="bg-white rounded-xl border border-emerald-100 p-4 shadow-sm">
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+    <section class="bg-white rounded-2xl border border-gray-100 p-5 sm:p-6 shadow-sm">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
             <div>
-                <p class="text-[10px] font-bold uppercase tracking-wider text-emerald-600">Historical Monitoring</p>
-                <h2 class="text-base font-bold text-gray-800">Tren Sensor</h2>
+                <p class="text-xs font-bold uppercase tracking-wider text-emerald-600">Historical Monitoring</p>
+                <h2 class="text-lg font-extrabold text-gray-900 mt-0.5">Tren Sensor</h2>
             </div>
             <div class="flex items-center gap-2">
-                <select id="filterSelector" class="text-xs border border-emerald-200 rounded-lg px-2.5 py-1.5 focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-emerald-50/50 text-emerald-900 font-medium">
-                    <option value="hari" {{ $filter === 'hari' ? 'selected' : '' }}>Hari ini</option>
-                    <option value="minggu" {{ $filter === 'minggu' ? 'selected' : '' }}>Minggu ini</option>
-                    <option value="bulan" {{ $filter === 'bulan' ? 'selected' : '' }}>Bulan ini</option>
-                </select>
-                <button id="exportBtn" type="button" class="inline-flex items-center gap-1.5 text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-1.5 px-3 rounded-lg shadow-sm transition">
+                <div class="relative">
+                    <select id="filterSelector" class="appearance-none text-xs font-semibold bg-gray-50 border border-gray-200 text-gray-700 rounded-xl px-3.5 py-2 pr-8 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:outline-none transition cursor-pointer">
+                        <option value="hari" {{ $filter === 'hari' ? 'selected' : '' }}>Hari ini</option>
+                        <option value="minggu" {{ $filter === 'minggu' ? 'selected' : '' }}>Minggu ini</option>
+                        <option value="bulan" {{ $filter === 'bulan' ? 'selected' : '' }}>Bulan ini</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-gray-500">
+                        <i class="fas fa-chevron-down text-[10px]"></i>
+                    </div>
+                </div>
+                <button id="exportBtn" type="button" class="inline-flex items-center gap-2 text-xs bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-semibold py-2 px-4 rounded-xl shadow-sm transition-colors">
                     <i class="fas fa-download text-xs"></i>
-                    <span>Export</span>
+                    <span>Export Data</span>
                 </button>
             </div>
         </div>
         @include('dashboard.cards.chart-sensor')
     </section>
 
+    {{-- SYSTEM CARDS --}}
     @include('dashboard.cards.pengaturan-system')
 </div>
 @endsection

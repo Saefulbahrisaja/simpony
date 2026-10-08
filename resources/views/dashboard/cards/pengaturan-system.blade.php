@@ -23,7 +23,7 @@
                     Batas TDS Minimum <span class="text-slate-400 font-normal">(ppm)</span>
                 </label>
                 <div class="relative">
-                    <input type="number" id="tds_min" name="tds_min" placeholder="600"
+                    <input type="number" id="tds_min" name="tds_min" placeholder="600" min="0" required
                            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-800 focus:bg-white focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all" />
                     <span class="absolute right-3 top-2.5 text-xs font-bold text-slate-400">PPM</span>
                 </div>
@@ -34,7 +34,7 @@
                     Batas Air Minimum <span class="text-slate-400 font-normal">(%)</span>
                 </label>
                 <div class="relative">
-                    <input type="number" id="air_min" name="air_min" placeholder="20"
+                    <input type="number" id="air_min" name="air_min" placeholder="20" min="0" required
                            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-800 focus:bg-white focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all" />
                     <span class="absolute right-3 top-2.5 text-xs font-bold text-slate-400">%</span>
                 </div>
@@ -45,7 +45,7 @@
                     Interval Update <span class="text-slate-400 font-normal">(detik)</span>
                 </label>
                 <div class="relative">
-                    <input type="number" id="interval" name="interval" placeholder="10"
+                    <input type="number" id="interval" name="interval" placeholder="10" min="1" required
                            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-800 focus:bg-white focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all" />
                     <span class="absolute right-3 top-2.5 text-xs font-bold text-slate-400">Detik</span>
                 </div>
@@ -103,22 +103,29 @@
         if (!selectTanaman) return;
         try {
             const res = await fetch('{{ url('/api/tanaman') }}');
-            if (!res.ok) return;
-            const data = await res.json();
-            
-            selectTanaman.innerHTML = '<option value="">-- Pilih Tanaman --</option>';
-            const list = data.data || data;
-            
-            if (Array.isArray(list)) {
-                list.forEach(t => {
-                    const opt = document.createElement('option');
-                    opt.value = t.id;
-                    opt.textContent = t.nama_tanaman;
-                    selectTanaman.appendChild(opt);
-                });
+            if (!res.ok) {
+                throw new Error(`Endpoint daftar tanaman merespons ${res.status}`);
             }
+            const data = await res.json();
+
+            selectTanaman.innerHTML = '<option value="">-- Pilih Tanaman --</option>';
+            const list = Array.isArray(data) ? data : data.data;
+
+            if (!Array.isArray(list) || list.length === 0) {
+                selectTanaman.innerHTML = '<option value="">Belum ada data tanaman</option>';
+                return;
+            }
+
+            list.forEach(t => {
+                if (!t.id || !t.nama_tanaman) return;
+                const opt = document.createElement('option');
+                opt.value = t.id;
+                opt.textContent = t.nama_tanaman;
+                selectTanaman.appendChild(opt);
+            });
         } catch (error) {
-            console.debug("Gagal memuat tanaman:", error);
+            console.error("Gagal memuat tanaman:", error);
+            selectTanaman.innerHTML = '<option value="">Gagal memuat daftar tanaman</option>';
         }
     }
 
@@ -162,7 +169,7 @@
                 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') 
                                 || document.querySelector('input[name="_token"]')?.value || '';
 
-                const res = await fetch('{{ url('/api/batas/update') }}', {
+                const res = await fetch('{{ url('/api/update-batas') }}', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -259,10 +266,18 @@
     }
 
     // Initial Execution
-    document.addEventListener('DOMContentLoaded', async () => {
+    const initializePengaturan = async () => {
         await loadTanamanList();
         await fetchPengaturan();
-    });
+    };
+
+    window.addEventListener('tanaman-list-updated', initializePengaturan);
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializePengaturan, { once: true });
+    } else {
+        initializePengaturan();
+    }
 })();
 </script>
 @endpush

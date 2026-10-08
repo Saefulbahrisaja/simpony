@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama')->unique(); // misalnya: tds_min, air_min
             $table->float('nilai');
-            $table->integer('interval'); // deskripsi opsional untuk pengaturan
+            $table->integer('interval')->default(10); // metadata opsional
             $table->timestamps();
         });
     }

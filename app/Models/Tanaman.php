@@ -13,7 +13,8 @@ class Tanaman extends Model
         'nama_tanaman',
         'nama_ilmiah',
         'hst',
-        'hss'
+        'hss',
+        'status'
     ];
 
     public function sensorData()

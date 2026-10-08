@@ -13,22 +13,36 @@ class SensorController extends Controller
 {
     public function store(Request $request)
     {
-        $data = $request->input('data');
+        $validated = $request->validate([
+            'data' => ['required', 'array'],
+            'data.suhu' => ['required', 'numeric'],
+            'data.kelembaban' => ['required', 'numeric'],
+            'data.suhuudara' => ['required', 'numeric'],
+            'data.ph' => ['nullable', 'numeric'],
+            'data.tds' => ['nullable', 'numeric'],
+            'data.pompa_air' => ['nullable', 'boolean'],
+            'data.pompa_nutrisi' => ['nullable', 'boolean'],
+            'data.level_air' => ['nullable', 'numeric'],
+            'data.air_min' => ['nullable', 'numeric'],
+        ]);
+        $data = $validated['data'];
 
-        // Ambil ID tanaman aktif dari tabel pengaturans
-        $tanamanAktifId = Pengaturan::where('nama', 'tanaman_aktif')->value('nilai');
+        // Hindari foreign key error jika pengaturan masih menunjuk tanaman yang sudah dihapus.
+        $tanamanAktifId = Pengaturan::where('nama', 'tanaman_aktif')->value('nilai')
+            ?? Tanaman::where('status', 'aktif')->value('id');
+        $tanamanAktifId = $tanamanAktifId ? Tanaman::whereKey((int) $tanamanAktifId)->value('id') : null;
 
         // Simpan data sensor ke database
         $sensor = SensorData::create([
             'suhu'          => $data['suhu'],
             'kelembaban'    => $data['kelembaban'],
             'suhuudara'     => $data['suhuudara'],
-            'ph'            => $data['ph'],
-            'tds'           => $data['tds'],
-            'pompa_air'     => $data['pompa_air'],
-            'pompa_nutrisi' => $data['pompa_nutrisi'],
-            'level_air'     => $data['level_air'],
-            'air_min'       => $data['air_min'],
+            'ph'            => $data['ph'] ?? null,
+            'tds'           => $data['tds'] ?? null,
+            'pompa_air'     => $data['pompa_air'] ?? null,
+            'pompa_nutrisi' => $data['pompa_nutrisi'] ?? null,
+            'level_air'     => $data['level_air'] ?? null,
+            'air_min'       => $data['air_min'] ?? null,
             'tanaman_id'    => $tanamanAktifId, // <<— disimpan otomatis
         ]);
 
@@ -43,7 +57,8 @@ class SensorController extends Controller
         $tdsMin   = Pengaturan::where('nama', 'tds_min')->value('nilai') ?? 700;
         $airMin   = Pengaturan::where('nama', 'air_min')->value('nilai') ?? 10;
         $interval = Pengaturan::where('nama', 'interval')->value('nilai') ?? 10; 
-        $tanamanAktif = Pengaturan::where('nama', 'tanaman_aktif')->value('nilai');
+        $tanamanAktif = Pengaturan::where('nama', 'tanaman_aktif')->value('nilai')
+            ?? Tanaman::where('status', 'aktif')->value('id');
 
         return response()->json([
             'tds_min'  => (float) $tdsMin,
@@ -54,41 +69,60 @@ class SensorController extends Controller
     }
 
     public function updateBatas(Request $request): JsonResponse
-{
-    // Gunakan nilai default jika request tidak mengirimkan data
-    $tdsMin     = $request->input('tds_min', 700);
-    $airMin     = $request->input('air_min', 10);
-    $interval   = $request->input('interval', 10);
-    $tanamanAktif = $request->input('tanaman_aktif', null);
+    {
+        $validated = $request->validate([
+            'tds_min' => ['sometimes', 'nullable', 'numeric', 'min:0'],
+            'air_min' => ['sometimes', 'nullable', 'numeric', 'min:0'],
+            'interval' => ['sometimes', 'nullable', 'numeric', 'min:1'],
+            'tanaman_aktif' => ['sometimes', 'nullable', 'integer', 'exists:tanaman,id'],
+        ]);
 
-    // Update atau buat baru
-    Pengaturan::updateOrCreate(['nama' => 'tds_min'], ['nilai' => $tdsMin]);
-    Pengaturan::updateOrCreate(['nama' => 'air_min'], ['nilai' => $airMin]);
-    Pengaturan::updateOrCreate(['nama' => 'interval'], ['nilai' => $interval]);
+        // Field kosong dari form akan menjadi null. Pertahankan nilai tersimpan;
+        // gunakan default hanya jika pengaturan tersebut belum pernah dibuat.
+        $resolveValue = static function (string $nama, $default) use ($validated) {
+            $value = $validated[$nama] ?? null;
 
-    // Update tanaman aktif jika dikirim
-    if (!is_null($tanamanAktif)) {
-        Pengaturan::updateOrCreate(['nama' => 'tanaman_aktif'], ['nilai' => $tanamanAktif]);
+            if ($value === null || $value === '') {
+                $value = Pengaturan::where('nama', $nama)->value('nilai') ?? $default;
+            }
+
+            return $value;
+        };
+
+        $tdsMin = $resolveValue('tds_min', 700);
+        $airMin = $resolveValue('air_min', 10);
+        $interval = $resolveValue('interval', 10);
+        $tanamanAktif = $validated['tanaman_aktif'] ?? null;
+
+        Pengaturan::updateOrCreate(['nama' => 'tds_min'], ['nilai' => $tdsMin]);
+        Pengaturan::updateOrCreate(['nama' => 'air_min'], ['nilai' => $airMin]);
+        Pengaturan::updateOrCreate(['nama' => 'interval'], ['nilai' => $interval]);
+
+        if ($tanamanAktif !== null && $tanamanAktif !== '') {
+            Pengaturan::updateOrCreate(['nama' => 'tanaman_aktif'], ['nilai' => $tanamanAktif]);
+            Tanaman::where('id', '!=', $tanamanAktif)->update(['status' => 'nonaktif']);
+            Tanaman::whereKey($tanamanAktif)->update(['status' => 'aktif']);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Pengaturan berhasil disimpan!',
+            'data' => [
+                'tds_min' => $tdsMin,
+                'air_min' => $airMin,
+                'interval' => $interval,
+                'tanaman_aktif' => $tanamanAktif,
+            ]
+        ]);
     }
-
-    return response()->json([
-        'success' => true,
-        'message' => 'Pengaturan berhasil disimpan!',
-        'data' => [
-            'tds_min' => $tdsMin,
-            'air_min' => $airMin,
-            'interval' => $interval,
-            'tanaman_aktif' => $tanamanAktif,
-        ]
-    ]);
-}
 
 /**
      * Ambil detail tanaman aktif dari tabel tanaman
      */
     public function getTanamanAktif(): JsonResponse
     {
-        $tanamanAktifId = Pengaturan::where('nama', 'tanaman_aktif')->value('nilai');
+        $tanamanAktifId = Pengaturan::where('nama', 'tanaman_aktif')->value('nilai')
+            ?? Tanaman::where('status', 'aktif')->value('id');
 
         if (!$tanamanAktifId) {
             return response()->json([
