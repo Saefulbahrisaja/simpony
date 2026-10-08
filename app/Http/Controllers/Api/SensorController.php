@@ -8,12 +8,31 @@ use App\Models\SensorData;
 use App\Models\Pengaturan;
 use Illuminate\Http\JsonResponse;
 use App\Models\Tanaman;
+use Illuminate\Support\Facades\Validator;
 
 class SensorController extends Controller
 {
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $payload = $request->all();
+
+        // NaN/Infinity bukan nilai JSON yang valid. Beberapa firmware tetap
+        // mengirim token tersebut, jadi ubah hanya nilai numerik non-finite
+        // menjadi null sebelum divalidasi.
+        if (empty($payload) && trim($request->getContent()) !== '') {
+            $normalizedJson = preg_replace(
+                '/(:\s*)(?:NaN|[-+]?Infinity)(?=\s*[,}\]])/i',
+                '$1null',
+                $request->getContent()
+            );
+            $decodedPayload = json_decode($normalizedJson, true);
+
+            if (json_last_error() === JSON_ERROR_NONE && is_array($decodedPayload)) {
+                $payload = $decodedPayload;
+            }
+        }
+
+        $validator = Validator::make($payload, [
             'data' => ['required', 'array'],
             'data.suhu' => ['required', 'numeric'],
             'data.kelembaban' => ['required', 'numeric'],
@@ -25,7 +44,16 @@ class SensorController extends Controller
             'data.level_air' => ['nullable', 'numeric'],
             'data.air_min' => ['nullable', 'numeric'],
         ]);
-        $data = $validated['data'];
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data sensor tidak valid.',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $data = $validator->validated()['data'];
 
         // Hindari foreign key error jika pengaturan masih menunjuk tanaman yang sudah dihapus.
         $tanamanAktifId = Pengaturan::where('nama', 'tanaman_aktif')->value('nilai')
