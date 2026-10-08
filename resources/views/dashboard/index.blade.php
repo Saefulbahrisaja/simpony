@@ -4,95 +4,89 @@
 
 @section('content')
 
-<div class="space-y-6">
-    {{-- STATUS RINGKAS --}}
-    <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-        <div class="modern-stat">
-            <div class="stat-icon bg-emerald-100 text-emerald-600"><i class="fas fa-droplet"></i></div>
-            <div><p class="stat-label">TDS Terakhir</p><p class="stat-value"><span id="dashboardTds">{{ $latestSensor?->tds !== null ? number_format($latestSensor->tds, 0) : '-' }}</span> <small>ppm</small></p></div>
-            <span class="stat-dot bg-emerald-500"></span>
-        </div>
-        <div class="modern-stat">
-            <div class="stat-icon bg-sky-100 text-sky-600"><i class="fas fa-temperature-half"></i></div>
-            <div><p class="stat-label">Suhu Air</p><p class="stat-value"><span id="dashboardSuhu">{{ $latestSensor?->suhu !== null ? number_format($latestSensor->suhu, 1) : '-' }}</span> <small>°C</small></p></div>
-            <span class="stat-dot bg-sky-500"></span>
-        </div>
-        <div class="modern-stat">
-            <div class="stat-icon bg-violet-100 text-violet-600"><i class="fas fa-wind"></i></div>
-            <div><p class="stat-label">Kelembaban</p><p class="stat-value"><span id="dashboardHumidity">{{ $latestSensor?->kelembaban !== null ? number_format($latestSensor->kelembaban, 1) : '-' }}</span> <small>%</small></p></div>
-            <span class="stat-dot bg-violet-500"></span>
-        </div>
-        <div class="modern-stat">
-            <div class="stat-icon bg-rose-100 text-rose-600"><i class="fas fa-virus"></i></div>
-            <div><p class="stat-label">Deteksi Hari Ini</p><p class="stat-value">{{ $diseaseToday }} <small>kasus</small></p></div>
-            <span class="stat-dot bg-rose-500"></span>
-        </div>
-    </section>
-
-    {{-- MONITORING + PENYAKIT --}}
-    <section class="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        <div class="xl:col-span-2">
-            @include('dashboard.cards.status-system')
-        </div>
-        <div class="disease-highlight">
-            <div class="flex items-center justify-between mb-5">
+<div class="space-y-4 max-w-7xl mx-auto px-2 sm:px-4">
+    {{-- STATUS RINGKAS (COMPACT) --}}
+    <section class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        {{-- TDS --}}
+        <div class="flex items-center justify-between p-3.5 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl text-white shadow-sm hover:shadow transition">
+            <div class="flex items-center space-x-3">
+                <div class="p-2.5 bg-white/20 rounded-lg backdrop-blur-sm">
+                    <i class="fas fa-droplet text-lg"></i>
+                </div>
                 <div>
-                    <p class="text-xs font-bold uppercase tracking-wider text-emerald-600">AI Plant Health</p>
-                    <h2 class="text-xl font-extrabold text-gray-900">Deteksi Penyakit</h2>
+                    <p class="text-xs font-medium text-emerald-100">TDS Terakhir</p>
+                    <p class="text-xl font-bold tracking-tight">
+                        <span id="dashboardTds">{{ $latestSensor?->tds !== null ? number_format($latestSensor->tds, 0) : '-' }}</span>
+                        <span class="text-xs font-normal opacity-90">ppm</span>
+                    </p>
                 </div>
-                <div class="w-11 h-11 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center"><i class="fas fa-leaf text-lg"></i></div>
             </div>
-            @if($latestDisease)
-                <div class="flex gap-4 items-center">
-                    @if($latestDisease->image_path)
-                        <img src="{{ asset($latestDisease->image_path) }}" class="w-24 h-24 rounded-2xl object-cover border border-gray-100" alt="Foto daun">
-                    @else
-                        <div class="w-24 h-24 rounded-2xl bg-gray-100 flex items-center justify-center text-gray-400"><i class="fas fa-image text-2xl"></i></div>
-                    @endif
-                    <div class="min-w-0">
-                        <p class="text-xs text-gray-500">Deteksi terakhir</p>
-                        <h3 class="text-lg font-extrabold text-gray-900 truncate">{{ ucwords(str_replace(['_', '-'], ' ', $latestDisease->disease)) }}</h3>
-                        <p class="text-sm text-gray-500">Confidence <b class="text-emerald-600">{{ number_format((float)$latestDisease->confidence * (abs((float)$latestDisease->confidence) <= 1 ? 100 : 1), 2) }}%</b></p>
-                        <p class="text-xs text-gray-400 mt-1">{{ optional($latestDisease->detected_at)->format('d M Y, H:i') }}</p>
-                    </div>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-200 animate-pulse"></span>
+        </div>
+
+        {{-- SUHU AIR --}}
+        <div class="flex items-center justify-between p-3.5 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl text-white shadow-sm hover:shadow transition">
+            <div class="flex items-center space-x-3">
+                <div class="p-2.5 bg-white/20 rounded-lg backdrop-blur-sm">
+                    <i class="fas fa-temperature-half text-lg"></i>
                 </div>
-            @else
-                <div class="rounded-2xl bg-gray-50 border border-dashed border-gray-200 p-6 text-center">
-                    <i class="fas fa-camera text-3xl text-gray-300 mb-3"></i>
-                    <p class="font-semibold text-gray-700">Belum ada deteksi penyakit</p>
-                    <p class="text-sm text-gray-500 mt-1">Gunakan aplikasi mobile untuk memotret daun.</p>
+                <div>
+                    <p class="text-xs font-medium text-teal-100">Suhu Air</p>
+                    <p class="text-xl font-bold tracking-tight">
+                        <span id="dashboardSuhu">{{ $latestSensor?->suhu !== null ? number_format($latestSensor->suhu, 1) : '-' }}</span>
+                        <span class="text-xs font-normal opacity-90">°C</span>
+                    </p>
                 </div>
-            @endif
-            <div class="grid grid-cols-2 gap-3 mt-5">
-                <div class="mini-stat"><span>Total sakit</span><b>{{ $diseaseCount }}</b></div>
-                <div class="mini-stat"><span>Healthy</span><b>{{ $healthyCount }}</b></div>
             </div>
-            <a href="{{ url('/disease-detections') }}" class="mt-4 w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gray-900 text-white py-3 font-bold hover:bg-gray-800 transition">
-                Lihat Riwayat Deteksi <i class="fas fa-arrow-right text-xs"></i>
-            </a>
-             <a href="{{ url('/disease-analysis') }}" class="btn btn-outline-primary">
-                <i class="fa-solid fa-chart-line me-1"></i> Analisis Kondisi & Penyakit
-            </a>
+            <span class="w-2.5 h-2.5 rounded-full bg-teal-200 animate-pulse"></span>
+        </div>
+
+        {{-- KELEMBABAN --}}
+        <div class="flex items-center justify-between p-3.5 bg-gradient-to-br from-cyan-600 to-emerald-700 rounded-xl text-white shadow-sm hover:shadow transition">
+            <div class="flex items-center space-x-3">
+                <div class="p-2.5 bg-white/20 rounded-lg backdrop-blur-sm">
+                    <i class="fas fa-wind text-lg"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-medium text-cyan-100">Kelembaban</p>
+                    <p class="text-xl font-bold tracking-tight">
+                        <span id="dashboardHumidity">{{ $latestSensor?->kelembaban !== null ? number_format($latestSensor->kelembaban, 1) : '-' }}</span>
+                        <span class="text-xs font-normal opacity-90">%</span>
+                    </p>
+                </div>
+            </div>
+            <span class="w-2.5 h-2.5 rounded-full bg-cyan-200 animate-pulse"></span>
         </div>
     </section>
 
-    {{-- TANAMAN --}}
-    <section class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+    {{-- MONITORING SISTEM --}}
+    <section class="w-full">
+        @include('dashboard.cards.status-system')
+    </section>
+
+    {{-- TANAMAN & LIVE SENSOR --}}
+    <section class="grid grid-cols-1 xl:grid-cols-3 gap-4">
         <div class="xl:col-span-1">@include('dashboard.cards.kondisi-tanaman')</div>
         <div class="xl:col-span-2">@include('dashboard.metrics.live-sensor')</div>
     </section>
 
     {{-- FILTER + GRAFIK --}}
-    <section class="glass-card p-5 md:p-6">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-5">
-            <div><p class="text-xs font-bold uppercase tracking-wider text-emerald-600">Historical Monitoring</p><h2 class="text-xl font-extrabold text-gray-900">Tren Sensor</h2></div>
+    <section class="bg-white rounded-xl border border-emerald-100 p-4 shadow-sm">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+            <div>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-emerald-600">Historical Monitoring</p>
+                <h2 class="text-base font-bold text-gray-800">Tren Sensor</h2>
+            </div>
             <div class="flex items-center gap-2">
-                <select id="filterSelector" class="form-input !py-2 !px-3">
+                <select id="filterSelector" class="text-xs border border-emerald-200 rounded-lg px-2.5 py-1.5 focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-emerald-50/50 text-emerald-900 font-medium">
                     <option value="hari" {{ $filter === 'hari' ? 'selected' : '' }}>Hari ini</option>
                     <option value="minggu" {{ $filter === 'minggu' ? 'selected' : '' }}>Minggu ini</option>
                     <option value="bulan" {{ $filter === 'bulan' ? 'selected' : '' }}>Bulan ini</option>
                 </select>
-                <button id="exportBtn" type="button" class="btn-primary !py-2 !px-4"><i class="fas fa-download"></i><span class="hidden sm:inline">Export</span></button>
+                <button id="exportBtn" type="button" class="inline-flex items-center gap-1.5 text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-1.5 px-3 rounded-lg shadow-sm transition">
+                    <i class="fas fa-download text-xs"></i>
+                    <span>Export</span>
+                </button>
             </div>
         </div>
         @include('dashboard.cards.chart-sensor')

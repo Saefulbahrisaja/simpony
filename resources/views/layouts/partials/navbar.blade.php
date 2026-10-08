@@ -7,9 +7,9 @@
             </div>
             <div>
                 <h1 class="text-xl sm:text-2xl font-black tracking-tight leading-none group-hover:text-emerald-200 transition-colors">
-                    Hijau Hydro
+                    SIMPONI 
                 </h1>
-                <p class="text-xs text-emerald-200/80 font-medium">Smart Environment Hydroponic System</p>
+                <p class="text-xs text-emerald-200/80 font-medium">(Smart IoT-Based Hydroponic Nutrition System)</p>
             </div>
         </a>
 
@@ -17,7 +17,7 @@
         <div class="flex items-center gap-3">
             <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs text-emerald-100">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                <span class="font-semibold">SIKECE System Active</span>
+                <span class="font-semibold">SIMPONI - Active</span>
             </div>
         </div>
     </div>
