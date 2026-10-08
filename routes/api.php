@@ -14,11 +14,18 @@ Route::post('/sensor', [SensorController::class, 'store']);
     
 
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/batas', [SensorController::class, 'getBatas']);
 Route::post('/update-batas', [SensorController::class, 'updateBatas']);
 Route::get('/tanaman/aktif', [SensorController::class, 'getTanamanAktif']);
-Route::apiResource('tanaman', TanamanController::class);
+Route::get('/tanaman', [TanamanController::class, 'index']);
+Route::get('/tanaman/{tanaman}', [TanamanController::class, 'show'])->whereNumber('tanaman');
+Route::middleware(['auth:sanctum', 'abilities:plants:manage'])->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/tanaman', [TanamanController::class, 'store']);
+    Route::put('/tanaman/{tanaman}', [TanamanController::class, 'update'])->whereNumber('tanaman');
+    Route::patch('/tanaman/{tanaman}', [TanamanController::class, 'update'])->whereNumber('tanaman');
+    Route::delete('/tanaman/{tanaman}', [TanamanController::class, 'destroy'])->whereNumber('tanaman');
+});
 Route::get('/sensor/export', [SensorController::class, 'export']);
 Route::get('/sensor/filter', [SensorController::class, 'filterData']);
 
