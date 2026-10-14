@@ -1,98 +1,110 @@
-<section class="glass-card rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:p-5">
-    <div class="mb-4 flex items-center justify-between gap-3 border-b border-slate-100 pb-3">
+<section class="p-6 border border-slate-100 shadow-sm rounded-3xl bg-white hover:shadow-md transition-all duration-300">
+    <div class="mb-5 flex items-center justify-between gap-3 border-b border-slate-100 pb-4">
         <div>
-            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-600">Data Tanaman</span>
-            <h2 class="mt-0.5 flex items-center gap-2 text-lg font-extrabold text-slate-800">
+            <span class="text-[11px] font-extrabold uppercase tracking-widest text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-100/60">
+                Data Tanaman
+            </span>
+            <h2 class="mt-2 flex items-center gap-2 text-lg font-black text-slate-800">
                 <i class="fas fa-seedling text-emerald-600"></i> Manajemen Tanaman
-                <span id="tanamanCount" class="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">…</span>
+                <span id="tanamanCount" class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700 border border-emerald-100">…</span>
             </h2>
         </div>
         <div class="flex shrink-0 gap-2">
-            <button id="btnMasukTanaman" type="button" class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-700 hover:bg-slate-50">
-                <i class="fas fa-lock"></i><span>Login</span>
+            <button id="btnMasukTanaman" type="button" class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs font-bold text-slate-700 hover:bg-slate-100 transition-all shadow-2xs">
+                <i class="fas fa-lock text-slate-400"></i><span>Login</span>
             </button>
-            <button id="btnKeluarTanaman" type="button" hidden class="hidden inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-600 hover:bg-slate-50">
+            <button id="btnKeluarTanaman" type="button" hidden class="hidden inline-flex items-center gap-1.5 rounded-xl border border-rose-200 bg-rose-50 px-3.5 py-2 text-xs font-bold text-rose-600 hover:bg-rose-100 transition-all">
                 <i class="fas fa-right-from-bracket"></i><span>Keluar</span>
             </button>
-            <button id="btnTambahTanaman" type="button" hidden class="hidden inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-2 text-xs font-bold text-white shadow-sm transition hover:bg-emerald-700">
-            <i class="fas fa-plus"></i><span>Tambah</span>
+            <button id="btnTambahTanaman" type="button" hidden class="hidden inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-4 py-2 text-xs font-black text-white shadow-md shadow-emerald-500/20 transition-all hover:from-emerald-600 hover:to-teal-700">
+                <i class="fas fa-plus"></i><span>Tambah Tanaman</span>
             </button>
         </div>
     </div>
 
-    <form id="formLoginTanaman" hidden class="hidden mb-4 rounded-xl border border-slate-200 bg-slate-50 p-3 sm:p-4">
-        <h3 class="mb-3 text-sm font-bold text-slate-700">Login pengelola tanaman</h3>
+    <!-- Form Login Admin -->
+    <form id="formLoginTanaman" hidden class="hidden mb-5 rounded-2xl border border-slate-200 bg-slate-50/80 p-4 sm:p-5 transition-all">
+        <h3 class="mb-3 text-xs font-extrabold text-slate-700 uppercase tracking-wider flex items-center gap-2">
+            <i class="fas fa-user-shield text-emerald-600"></i> Login Pengelola Tanaman
+        </h3>
         <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
-                <label for="usernameTanaman" class="mb-1 block text-[11px] font-semibold text-slate-600">Username</label>
+                <label for="usernameTanaman" class="mb-1 block text-[11px] font-bold text-slate-600 uppercase">Username</label>
                 <input id="usernameTanaman" name="username" type="text" autocomplete="username" required
-                       class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20">
+                       class="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all">
             </div>
             <div>
-                <label for="passwordTanaman" class="mb-1 block text-[11px] font-semibold text-slate-600">Password</label>
+                <label for="passwordTanaman" class="mb-1 block text-[11px] font-bold text-slate-600 uppercase">Password</label>
                 <input id="passwordTanaman" name="password" type="password" autocomplete="current-password" required
-                       class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20">
+                       class="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all">
             </div>
         </div>
-        <div class="mt-3 flex justify-end gap-2">
-            <button id="btnBatalLoginTanaman" type="button" class="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100">Batal</button>
-            <button type="submit" class="rounded-lg bg-emerald-600 px-3.5 py-2 text-xs font-bold text-white hover:bg-emerald-700">Masuk</button>
+        <div class="mt-4 flex justify-end gap-2">
+            <button id="btnBatalLoginTanaman" type="button" class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 transition-all">Batal</button>
+            <button type="submit" class="rounded-xl bg-emerald-600 px-4 py-2 text-xs font-black text-white hover:bg-emerald-700 transition-all shadow-sm">Masuk</button>
         </div>
     </form>
 
-    <form id="formTanaman" hidden class="hidden mb-4 rounded-xl border border-emerald-100 bg-emerald-50/40 p-3 sm:p-4">
-        <h3 id="formTanamanTitle" class="mb-3 text-sm font-bold text-slate-700">Tambah tanaman</h3>
+    <!-- Form Tambah/Edit Tanaman -->
+    <form id="formTanaman" hidden class="hidden mb-5 rounded-2xl border border-emerald-200/80 bg-emerald-50/30 p-4 sm:p-5 transition-all">
+        <h3 id="formTanamanTitle" class="mb-3 text-xs font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+            <i class="fas fa-pen-to-square text-emerald-600"></i> Tambah Tanaman Baru
+        </h3>
         <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
             <div class="lg:col-span-2">
-                <label for="nama_tanaman" class="mb-1 block text-[11px] font-semibold text-slate-600">Nama tanaman</label>
+                <label for="nama_tanaman" class="mb-1 block text-[11px] font-bold text-slate-600 uppercase">Nama Tanaman</label>
                 <input id="nama_tanaman" name="nama_tanaman" type="text" maxlength="255" required
-                       class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20">
+                       class="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all">
             </div>
             <div class="lg:col-span-2">
-                <label for="nama_ilmiah" class="mb-1 block text-[11px] font-semibold text-slate-600">Nama ilmiah <span class="font-normal text-slate-400">(opsional)</span></label>
+                <label for="nama_ilmiah" class="mb-1 block text-[11px] font-bold text-slate-600 uppercase">Nama Ilmiah <span class="font-normal text-slate-400 lowercase">(opsional)</span></label>
                 <input id="nama_ilmiah" name="nama_ilmiah" type="text" maxlength="255"
-                       class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20">
+                       class="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all">
             </div>
             <div>
-                <label for="status_tanaman" class="mb-1 block text-[11px] font-semibold text-slate-600">Status</label>
-                <select id="status_tanaman" name="status" class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20">
+                <label for="status_tanaman" class="mb-1 block text-[11px] font-bold text-slate-600 uppercase">Status</label>
+                <select id="status_tanaman" name="status" class="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all">
                     <option value="nonaktif">Nonaktif</option>
                     <option value="aktif">Aktif</option>
                 </select>
             </div>
             <div>
-                <label for="hst" class="mb-1 block text-[11px] font-semibold text-slate-600">Tanggal semai</label>
-                <input id="hst" name="hst" type="date" class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20">
+                <label for="hst" class="mb-1 block text-[11px] font-bold text-slate-600 uppercase">Tanggal Semai</label>
+                <input id="hst" name="hst" type="date" class="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all">
             </div>
             <div>
-                <label for="hss" class="mb-1 block text-[11px] font-semibold text-slate-600">Tanggal tanam</label>
-                <input id="hss" name="hss" type="date" class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20">
+                <label for="hss" class="mb-1 block text-[11px] font-bold text-slate-600 uppercase">Tanggal Tanam</label>
+                <input id="hss" name="hss" type="date" class="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all">
             </div>
         </div>
-        <div class="mt-3 flex justify-end gap-2">
-            <button id="btnBatalEditTanaman" type="button" hidden class="hidden rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50">Batal</button>
-            <button id="btnSimpanTanaman" type="submit" class="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3.5 py-2 text-xs font-bold text-white hover:bg-emerald-700">
+        <div class="mt-4 flex justify-end gap-2">
+            <button id="btnBatalEditTanaman" type="button" hidden class="hidden rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 transition-all">Batal</button>
+            <button id="btnSimpanTanaman" type="submit" class="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-4 py-2 text-xs font-black text-white hover:bg-emerald-700 transition-all shadow-sm">
                 <i class="fas fa-plus"></i><span>Simpan</span>
             </button>
         </div>
     </form>
 
-    <div class="overflow-x-auto rounded-xl border border-slate-200">
+    <!-- Table Daftar Tanaman -->
+    <div class="overflow-x-auto rounded-2xl border border-slate-100">
         <table class="min-w-full divide-y divide-slate-100 text-left text-sm">
-            <thead class="bg-slate-50 text-[10px] uppercase tracking-wide text-slate-500">
+            <thead class="bg-slate-50/80 text-[10px] uppercase tracking-wider font-extrabold text-slate-400">
                 <tr>
-                    <th class="px-3 py-2.5 font-bold">Tanaman</th>
-                    <th class="hidden px-3 py-2.5 font-bold sm:table-cell">Tanggal semai / tanam</th>
-                    <th class="px-3 py-2.5 font-bold">Status</th>
-                    <th class="px-3 py-2.5 text-right font-bold">Aksi</th>
+                    <th class="px-4 py-3 font-extrabold">Tanaman</th>
+                    <th class="hidden px-4 py-3 font-extrabold sm:table-cell">Tanggal Semai / Tanam</th>
+                    <th class="px-4 py-3 font-extrabold">Status</th>
+                    <th class="px-4 py-3 text-right font-extrabold">Aksi</th>
                 </tr>
             </thead>
             <tbody id="daftarTanaman" class="divide-y divide-slate-100 bg-white">
-                <tr><td colspan="4" class="px-3 py-5 text-center text-xs text-slate-400">Memuat daftar tanaman...</td></tr>
+                <tr><td colspan="4" class="px-4 py-6 text-center text-xs text-slate-400">Memuat daftar tanaman...</td></tr>
             </tbody>
         </table>
     </div>
-    <p class="mt-2 text-[10px] text-slate-400">Login dibutuhkan untuk tambah, ubah, dan hapus. Tanaman dengan riwayat sensor tidak dapat dihapus.</p>
+    <p class="mt-3 text-[11px] text-slate-400 flex items-center gap-1">
+        <i class="fas fa-info-circle text-slate-300"></i>
+        Login dibutuhkan untuk merubah data. Tanaman dengan riwayat sensor aktif tidak dapat dihapus.
+    </p>
 </section>
 
 @push('scripts')
@@ -118,6 +130,7 @@
     let pendingAction = null;
 
     const setHidden = (element, hidden) => {
+        if (!element) return;
         element.hidden = hidden;
         element.classList.toggle('hidden', hidden);
     };
@@ -172,14 +185,15 @@
     }
 
     function renderRows() {
-        count.textContent = `${tanamanList.length} tanaman`;
+        if (count) count.textContent = `${tanamanList.length} tanaman`;
+        if (!tbody) return;
         tbody.replaceChildren();
 
         if (!tanamanList.length) {
             const row = document.createElement('tr');
             const cell = document.createElement('td');
             cell.colSpan = 4;
-            cell.className = 'px-4 py-8 text-center text-sm text-slate-400';
+            cell.className = 'px-4 py-8 text-center text-xs text-slate-400';
             cell.textContent = 'Belum ada data tanaman.';
             row.appendChild(cell);
             tbody.appendChild(row);
@@ -188,12 +202,12 @@
 
         tanamanList.forEach(tanaman => {
             const row = document.createElement('tr');
-            row.className = 'hover:bg-slate-50/70';
+            row.className = 'hover:bg-slate-50/70 transition-colors';
 
             const nameCell = document.createElement('td');
-            nameCell.className = 'px-3 py-2.5';
+            nameCell.className = 'px-4 py-3';
             const name = document.createElement('div');
-            name.className = 'font-semibold text-slate-800';
+            name.className = 'font-extrabold text-slate-800';
             name.textContent = tanaman.nama_tanaman;
             nameCell.appendChild(name);
             if (tanaman.nama_ilmiah) {
@@ -208,31 +222,32 @@
             nameCell.appendChild(mobileDates);
 
             const dateCell = document.createElement('td');
-            dateCell.className = 'hidden whitespace-nowrap px-3 py-2.5 text-xs text-slate-600 sm:table-cell';
+            dateCell.className = 'hidden whitespace-nowrap px-4 py-3 text-xs text-slate-600 sm:table-cell';
             dateCell.textContent = `Semai: ${tanaman.hst || '-'} · Tanam: ${tanaman.hss || '-'}`;
 
             const statusCell = document.createElement('td');
-            statusCell.className = 'px-3 py-2.5';
+            statusCell.className = 'px-4 py-3';
             const badge = document.createElement('span');
             const active = tanaman.status === 'aktif';
-            badge.className = `rounded-full px-2.5 py-1 text-xs font-bold ${active ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-600'}`;
+            badge.className = `rounded-full px-3 py-1 text-xs font-black ${active ? 'bg-emerald-500/10 text-emerald-700 border border-emerald-200/60' : 'bg-slate-100 text-slate-600 border border-slate-200'}`;
             badge.textContent = active ? 'Aktif' : 'Nonaktif';
             statusCell.appendChild(badge);
 
             const actionCell = document.createElement('td');
-            actionCell.className = 'whitespace-nowrap px-3 py-2.5 text-right';
+            actionCell.className = 'whitespace-nowrap px-4 py-3 text-right';
             const edit = document.createElement('button');
             edit.type = 'button';
-            edit.className = 'mr-2 rounded-lg border border-emerald-200 px-2.5 py-1.5 text-xs font-semibold text-emerald-700 hover:bg-emerald-50';
+            edit.className = 'mr-1.5 rounded-xl border border-emerald-200 bg-emerald-50/50 px-3 py-1.5 text-xs font-bold text-emerald-700 hover:bg-emerald-100 transition-all';
             edit.textContent = 'Edit';
             edit.addEventListener('click', () => requireLogin(() => beginEdit(tanaman)));
+            
             const remove = document.createElement('button');
             remove.type = 'button';
-            remove.className = 'rounded-lg border border-rose-200 px-2.5 py-1.5 text-xs font-semibold text-rose-600 hover:bg-rose-50';
+            remove.className = 'rounded-xl border border-rose-200 bg-rose-50/50 px-3 py-1.5 text-xs font-bold text-rose-600 hover:bg-rose-100 transition-all';
             remove.textContent = 'Hapus';
             remove.addEventListener('click', () => requireLogin(() => deleteTanaman(tanaman)));
+            
             actionCell.append(edit, remove);
-
             row.append(nameCell, dateCell, statusCell, actionCell);
             tbody.appendChild(row);
         });
@@ -244,12 +259,13 @@
             tanamanList = Array.isArray(result.data) ? result.data : [];
             renderRows();
         } catch (error) {
-            count.textContent = 'Gagal memuat';
+            if (count) count.textContent = 'Gagal memuat';
+            if (!tbody) return;
             tbody.innerHTML = '';
             const row = document.createElement('tr');
             const cell = document.createElement('td');
             cell.colSpan = 4;
-            cell.className = 'px-4 py-8 text-center text-sm text-rose-600';
+            cell.className = 'px-4 py-8 text-center text-sm text-rose-600 font-semibold';
             cell.textContent = error.message;
             row.appendChild(cell);
             tbody.appendChild(row);
@@ -257,16 +273,20 @@
     }
 
     function resetForm() {
+        if (!form) return;
         form.reset();
         editingId = null;
         setHidden(form, true);
-        title.textContent = 'Tambah tanaman';
-        saveButton.querySelector('span').textContent = 'Simpan';
-        saveButton.querySelector('i').className = 'fas fa-plus';
+        if (title) title.textContent = 'Tambah Tanaman Baru';
+        if (saveButton) {
+            saveButton.querySelector('span').textContent = 'Simpan';
+            saveButton.querySelector('i').className = 'fas fa-plus';
+        }
         setHidden(cancelButton, true);
     }
 
     function beginEdit(tanaman) {
+        if (!form) return;
         editingId = tanaman.id;
         setHidden(form, false);
         form.elements.nama_tanaman.value = tanaman.nama_tanaman || '';
@@ -274,49 +294,55 @@
         form.elements.hst.value = tanaman.hst || '';
         form.elements.hss.value = tanaman.hss || '';
         form.elements.status.value = tanaman.status || 'nonaktif';
-        title.textContent = `Ubah tanaman #${tanaman.id}`;
-        saveButton.querySelector('span').textContent = 'Simpan Perubahan';
-        saveButton.querySelector('i').className = 'fas fa-floppy-disk';
+        if (title) title.textContent = `Ubah Tanaman #${tanaman.id}`;
+        if (saveButton) {
+            saveButton.querySelector('span').textContent = 'Simpan Perubahan';
+            saveButton.querySelector('i').className = 'fas fa-floppy-disk';
+        }
         setHidden(cancelButton, false);
         form.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
-    addButton.addEventListener('click', () => requireLogin(() => {
-        resetForm();
-        setHidden(form, false);
-        form.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        form.elements.nama_tanaman.focus();
-    }));
-
-    form.addEventListener('submit', async event => {
-        event.preventDefault();
-        if (!getToken()) {
-            openLogin(() => form.requestSubmit());
-            return;
-        }
-
-        const payload = Object.fromEntries(new FormData(form).entries());
-        ['nama_ilmiah', 'hst', 'hss'].forEach(key => { if (!payload[key]) payload[key] = null; });
-
-        try {
-            const response = await fetch(editingId ? `${endpoint}/${editingId}` : endpoint, {
-                method: editingId ? 'PUT' : 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    Authorization: `Bearer ${getToken()}`,
-                },
-                body: JSON.stringify(payload),
-            });
-            const result = await readResponse(response);
-            notify(result.message || 'Data tanaman tersimpan.');
+    if (addButton) {
+        addButton.addEventListener('click', () => requireLogin(() => {
             resetForm();
-            await loadTanaman();
-            window.dispatchEvent(new Event('tanaman-list-updated'));
-        } catch (error) {
-            notify(handleAuthError(error), 'error');
-        }
-    });
+            setHidden(form, false);
+            form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            form.elements.nama_tanaman.focus();
+        }));
+    }
+
+    if (form) {
+        form.addEventListener('submit', async event => {
+            event.preventDefault();
+            if (!getToken()) {
+                openLogin(() => form.requestSubmit());
+                return;
+            }
+
+            const payload = Object.fromEntries(new FormData(form).entries());
+            ['nama_ilmiah', 'hst', 'hss'].forEach(key => { if (!payload[key]) payload[key] = null; });
+
+            try {
+                const response = await fetch(editingId ? `${endpoint}/${editingId}` : endpoint, {
+                    method: editingId ? 'PUT' : 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                        Authorization: `Bearer ${getToken()}`,
+                    },
+                    body: JSON.stringify(payload),
+                });
+                const result = await readResponse(response);
+                notify(result.message || 'Data tanaman tersimpan.');
+                resetForm();
+                await loadTanaman();
+                window.dispatchEvent(new Event('tanaman-list-updated'));
+            } catch (error) {
+                notify(handleAuthError(error), 'error');
+            }
+        });
+    }
 
     async function deleteTanaman(tanaman) {
         let confirmed = false;
@@ -353,53 +379,59 @@
         }
     }
 
-    loginButton.addEventListener('click', () => openLogin());
-    cancelLoginButton.addEventListener('click', () => {
-        pendingAction = null;
-        loginForm.reset();
-        setHidden(loginForm, true);
-    });
-
-    loginForm.addEventListener('submit', async event => {
-        event.preventDefault();
-        try {
-            const result = await readResponse(await fetch(loginEndpoint, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-                body: JSON.stringify({
-                    username: loginForm.elements.username.value,
-                    password: loginForm.elements.password.value,
-                }),
-            }));
-
-            if (!result.token) throw new Error('Server tidak mengirim token login.');
-            sessionStorage.setItem(tokenKey, result.token);
-            loginForm.reset();
-            setHidden(loginForm, true);
-            setAuthUI();
-            const action = pendingAction;
+    if (loginButton) loginButton.addEventListener('click', () => openLogin());
+    if (cancelLoginButton) {
+        cancelLoginButton.addEventListener('click', () => {
             pendingAction = null;
-            if (action) action();
-            else notify(result.message || 'Login berhasil.');
-        } catch (error) {
-            notify(error.message, 'error');
-        }
-    });
+            if (loginForm) loginForm.reset();
+            setHidden(loginForm, true);
+        });
+    }
 
-    logoutButton.addEventListener('click', async () => {
-        try {
-            await fetch(logoutEndpoint, {
-                method: 'POST',
-                headers: { Accept: 'application/json', Authorization: `Bearer ${getToken()}` },
-            });
-        } finally {
-            sessionStorage.removeItem(tokenKey);
-            setAuthUI();
-            resetForm();
-        }
-    });
+    if (loginForm) {
+        loginForm.addEventListener('submit', async event => {
+            event.preventDefault();
+            try {
+                const result = await readResponse(await fetch(loginEndpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                    body: JSON.stringify({
+                        username: loginForm.elements.username.value,
+                        password: loginForm.elements.password.value,
+                    }),
+                }));
 
-    cancelButton.addEventListener('click', resetForm);
+                if (!result.token) throw new Error('Server tidak mengirim token login.');
+                sessionStorage.setItem(tokenKey, result.token);
+                loginForm.reset();
+                setHidden(loginForm, true);
+                setAuthUI();
+                const action = pendingAction;
+                pendingAction = null;
+                if (action) action();
+                else notify(result.message || 'Login berhasil.');
+            } catch (error) {
+                notify(error.message, 'error');
+            }
+        });
+    }
+
+    if (logoutButton) {
+        logoutButton.addEventListener('click', async () => {
+            try {
+                await fetch(logoutEndpoint, {
+                    method: 'POST',
+                    headers: { Accept: 'application/json', Authorization: `Bearer ${getToken()}` },
+                });
+            } finally {
+                sessionStorage.removeItem(tokenKey);
+                setAuthUI();
+                resetForm();
+            }
+        });
+    }
+
+    if (cancelButton) cancelButton.addEventListener('click', resetForm);
     setAuthUI();
     loadTanaman();
 })();

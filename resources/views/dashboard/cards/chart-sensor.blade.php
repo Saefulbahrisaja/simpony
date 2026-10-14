@@ -1,95 +1,97 @@
 {{-- CARD UTAMA GRAFIK SENSOR --}}
-<div class="glass-card p-6 mt-6">
+<div class="p-6 border border-slate-100 shadow-sm rounded-3xl bg-white hover:shadow-md transition-all duration-300">
     {{-- Header Section --}}
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
         <div>
-            <span class="text-xs font-bold uppercase tracking-wider text-emerald-600">Realtime Analytics</span>
-            <h3 class="text-xl font-extrabold text-slate-800 flex items-center gap-2 mt-0.5">
+            <span class="text-[11px] font-extrabold uppercase tracking-widest text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-100/60">
+                Realtime Analytics
+            </span>
+            <h3 class="text-lg font-black text-slate-800 flex items-center gap-2 mt-2">
                 <i class="fas fa-chart-line text-emerald-600"></i>
-                Grafik Performance Sensor
+                Grafik Telemetri Sensor
             </h3>
         </div>
-        <div class="flex items-center gap-2 text-xs text-slate-500 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200 self-start sm:self-auto">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <div class="flex items-center gap-2 text-xs font-semibold text-slate-500 bg-slate-50 px-3.5 py-2 rounded-xl border border-slate-200/80 self-start sm:self-auto shadow-2xs">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
             Auto update tiap 10 detik
         </div>
     </div>
 
-    {{-- Grid Grafik Individu (1 kolom di Mobile, 2 kolom di Medium/Desktop) --}}
+    {{-- Grid Grafik Individu --}}
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         {{-- Suhu Air --}}
-        <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
+        <div class="bg-slate-50/60 rounded-2xl p-5 border border-slate-100/90 hover:bg-white hover:shadow-sm transition-all duration-200 group">
             <div class="flex items-center justify-between mb-4">
-                <h4 class="text-sm font-bold text-slate-700 flex items-center gap-2">
-                    <span class="w-8 h-8 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-xs">
+                <h4 class="text-xs font-bold text-slate-700 flex items-center gap-2.5">
+                    <span class="w-9 h-9 rounded-xl bg-rose-500/10 text-rose-500 flex items-center justify-center text-xs group-hover:scale-105 transition-transform">
                         <i class="fas fa-temperature-high"></i>
                     </span>
                     Suhu Air Nutrisi
                 </h4>
-                <span class="text-xs font-semibold text-rose-500 bg-rose-50 px-2 py-0.5 rounded-md">°C</span>
+                <span class="text-[11px] font-extrabold text-rose-600 bg-rose-500/10 px-2.5 py-1 rounded-lg">°C</span>
             </div>
-            <div class="relative w-full h-60">
+            <div class="relative w-full h-56">
                 <canvas id="suhuChart"></canvas>
             </div>
         </div>
 
         {{-- Suhu Udara --}}
-        <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
+        <div class="bg-slate-50/60 rounded-2xl p-5 border border-slate-100/90 hover:bg-white hover:shadow-sm transition-all duration-200 group">
             <div class="flex items-center justify-between mb-4">
-                <h4 class="text-sm font-bold text-slate-700 flex items-center gap-2">
-                    <span class="w-8 h-8 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-xs">
+                <h4 class="text-xs font-bold text-slate-700 flex items-center gap-2.5">
+                    <span class="w-9 h-9 rounded-xl bg-sky-500/10 text-sky-600 flex items-center justify-center text-xs group-hover:scale-105 transition-transform">
                         <i class="fas fa-sun"></i>
                     </span>
                     Suhu Udara
                 </h4>
-                <span class="text-xs font-semibold text-teal-600 bg-teal-50 px-2 py-0.5 rounded-md">°C</span>
+                <span class="text-[11px] font-extrabold text-sky-600 bg-sky-500/10 px-2.5 py-1 rounded-lg">°C</span>
             </div>
-            <div class="relative w-full h-60">
+            <div class="relative w-full h-56">
                 <canvas id="suhuUdaraChart"></canvas>
             </div>
         </div>
 
         {{-- TDS Nutrisi --}}
-        <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
+        <div class="bg-slate-50/60 rounded-2xl p-5 border border-slate-100/90 hover:bg-white hover:shadow-sm transition-all duration-200 group">
             <div class="flex items-center justify-between mb-4">
-                <h4 class="text-sm font-bold text-slate-700 flex items-center gap-2">
-                    <span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs">
-                        <i class="fas fa-seedling"></i>
+                <h4 class="text-xs font-bold text-slate-700 flex items-center gap-2.5">
+                    <span class="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-xs group-hover:scale-105 transition-transform">
+                        <i class="fas fa-leaf"></i>
                     </span>
-                    TDS Nutrisi
+                    Kepekatan Nutrisi (TDS)
                 </h4>
-                <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">PPM</span>
+                <span class="text-[11px] font-extrabold text-emerald-600 bg-emerald-500/10 px-2.5 py-1 rounded-lg">PPM</span>
             </div>
-            <div class="relative w-full h-60">
+            <div class="relative w-full h-56">
                 <canvas id="tdsChart"></canvas>
             </div>
         </div>
 
         {{-- Kelembaban Udara --}}
-        <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
+        <div class="bg-slate-50/60 rounded-2xl p-5 border border-slate-100/90 hover:bg-white hover:shadow-sm transition-all duration-200 group">
             <div class="flex items-center justify-between mb-4">
-                <h4 class="text-sm font-bold text-slate-700 flex items-center gap-2">
-                    <span class="w-8 h-8 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center text-xs">
+                <h4 class="text-xs font-bold text-slate-700 flex items-center gap-2.5">
+                    <span class="w-9 h-9 rounded-xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center text-xs group-hover:scale-105 transition-transform">
                         <i class="fas fa-wind"></i>
                     </span>
                     Kelembaban Udara
                 </h4>
-                <span class="text-xs font-semibold text-violet-600 bg-violet-50 px-2 py-0.5 rounded-md">% RH</span>
+                <span class="text-[11px] font-extrabold text-indigo-600 bg-indigo-500/10 px-2.5 py-1 rounded-lg">% RH</span>
             </div>
-            <div class="relative w-full h-60">
+            <div class="relative w-full h-56">
                 <canvas id="kelembabanUdaraChart"></canvas>
             </div>
         </div>
     </div>
 
     {{-- Grafik Gabungan Sensor --}}
-    <div class="bg-white rounded-2xl p-5 md:p-6 border border-slate-200/80 shadow-sm">
-        <div class="flex items-center justify-between mb-4">
-            <h4 class="text-base font-bold text-slate-800 flex items-center gap-2">
-                <span class="w-8 h-8 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-xs">
+    <div class="bg-slate-50/80 rounded-2xl p-5 md:p-6 border border-slate-100">
+        <div class="flex items-center justify-between mb-5">
+            <h4 class="text-sm font-bold text-slate-800 flex items-center gap-2.5">
+                <span class="w-9 h-9 rounded-xl bg-teal-500/10 text-teal-600 flex items-center justify-center text-xs">
                     <i class="fas fa-chart-area"></i>
                 </span>
-                Grafik Monitoring Gabungan Sensor
+                Grafik Monitoring Combined Multivariable
             </h4>
         </div>
         <div class="relative w-full h-80 md:h-96">
@@ -103,8 +105,15 @@
 (function() {
     let suhuChart, tdsChart, phChart, combinedChart, suhuUdaraChart, kelembabanUdaraChart;
 
-    // Helper untuk membuat opsi chart standar yang bersih
-    function createChartConfig(label, data, waktu, colorHex, fillBgHex) {
+    // Helper membuat gradien warnaChart.js
+    function createGradient(ctx, colorHex) {
+        const gradient = ctx.createLinearGradient(0, 0, 0, 200);
+        gradient.addColorStop(0, colorHex.replace('1)', '0.25)'));
+        gradient.addColorStop(1, colorHex.replace('1)', '0.0)'));
+        return gradient;
+    }
+
+    function createChartConfig(ctx, label, data, waktu, colorHex) {
         return {
             type: 'line',
             data: {
@@ -113,12 +122,13 @@
                     label: label,
                     data: data || [],
                     borderColor: colorHex,
-                    backgroundColor: fillBgHex || 'transparent',
-                    fill: !!fillBgHex,
-                    tension: 0.4,
+                    backgroundColor: createGradient(ctx, colorHex),
+                    fill: true,
+                    tension: 0.35,
                     borderWidth: 2.5,
                     pointRadius: 2,
-                    pointHoverRadius: 5
+                    pointHoverRadius: 6,
+                    pointBackgroundColor: colorHex
                 }]
             },
             options: {
@@ -130,12 +140,12 @@
                 scales: {
                     x: {
                         grid: { display: false },
-                        ticks: { font: { size: 10 }, color: '#94a3b8' }
+                        ticks: { font: { size: 10, family: 'Plus Jakarta Sans' }, color: '#94a3b8' }
                     },
                     y: {
                         beginAtZero: false,
                         grid: { color: '#f1f5f9' },
-                        ticks: { font: { size: 10 }, color: '#94a3b8' }
+                        ticks: { font: { size: 10, family: 'Plus Jakarta Sans' }, color: '#94a3b8' }
                     }
                 }
             }
@@ -143,19 +153,18 @@
     }
 
     function initCharts(waktu, suhu, tds, ph, suhuudara, kelembaban) {
-        // Safe Canvas Initialization Check
-        const ctxSuhu = document.getElementById('suhuChart');
-        const ctxTds = document.getElementById('tdsChart');
-        const ctxPh = document.getElementById('phChart');
-        const ctxSuhuUdara = document.getElementById('suhuUdaraChart');
-        const ctxKelembaban = document.getElementById('kelembabanUdaraChart');
-        const ctxCombined = document.getElementById('combinedChart');
+        const ctxSuhu = document.getElementById('suhuChart')?.getContext('2d');
+        const ctxTds = document.getElementById('tdsChart')?.getContext('2d');
+        const ctxPh = document.getElementById('phChart')?.getContext('2d');
+        const ctxSuhuUdara = document.getElementById('suhuUdaraChart')?.getContext('2d');
+        const ctxKelembaban = document.getElementById('kelembabanUdaraChart')?.getContext('2d');
+        const ctxCombined = document.getElementById('combinedChart')?.getContext('2d');
 
-        if (ctxSuhu) suhuChart = new Chart(ctxSuhu, createChartConfig('Suhu Air (°C)', suhu, waktu, '#ef4444', 'rgba(239, 68, 68, 0.05)'));
-        if (ctxTds) tdsChart = new Chart(ctxTds, createChartConfig('TDS (ppm)', tds, waktu, '#10b981', 'rgba(16, 185, 129, 0.05)'));
-        if (ctxPh) phChart = new Chart(ctxPh, createChartConfig('pH', ph, waktu, '#f59e0b', 'rgba(245, 158, 11, 0.05)'));
-        if (ctxSuhuUdara) suhuUdaraChart = new Chart(ctxSuhuUdara, createChartConfig('Suhu Udara (°C)', suhuudara, waktu, '#0d9488', 'rgba(13, 148, 136, 0.05)'));
-        if (ctxKelembaban) kelembabanUdaraChart = new Chart(ctxKelembaban, createChartConfig('Kelembaban Udara (%)', kelembaban, waktu, '#8b5cf6', 'rgba(139, 92, 246, 0.05)'));
+        if (ctxSuhu) suhuChart = new Chart(ctxSuhu, createChartConfig(ctxSuhu, 'Suhu Air (°C)', suhu, waktu, 'rgba(244, 63, 94, 1)'));
+        if (ctxTds) tdsChart = new Chart(ctxTds, createChartConfig(ctxTds, 'TDS (ppm)', tds, waktu, 'rgba(16, 185, 129, 1)'));
+        if (ctxPh) phChart = new Chart(ctxPh, createChartConfig(ctxPh, 'pH', ph, waktu, 'rgba(245, 158, 11, 1)'));
+        if (ctxSuhuUdara) suhuUdaraChart = new Chart(ctxSuhuUdara, createChartConfig(ctxSuhuUdara, 'Suhu Udara (°C)', suhuudara, waktu, 'rgba(14, 165, 233, 1)'));
+        if (ctxKelembaban) kelembabanUdaraChart = new Chart(ctxKelembaban, createChartConfig(ctxKelembaban, 'Kelembaban Udara (%)', kelembaban, waktu, 'rgba(99, 102, 241, 1)'));
 
         if (ctxCombined) {
             combinedChart = new Chart(ctxCombined, {
@@ -163,21 +172,21 @@
                 data: {
                     labels: waktu || [],
                     datasets: [
-                        { label: 'Suhu Air (°C)', data: suhu || [], borderColor: '#ef4444', tension: 0.4, borderWidth: 2, pointRadius: 0 },
-                        { label: 'TDS (ppm)', data: tds || [], borderColor: '#10b981', tension: 0.4, borderWidth: 2, pointRadius: 0 },
-                        { label: 'Suhu Udara (°C)', data: suhuudara || [], borderColor: '#0d9488', tension: 0.4, borderWidth: 2, pointRadius: 0 },
-                        { label: 'Kelembaban (%)', data: kelembaban || [], borderColor: '#8b5cf6', tension: 0.4, borderWidth: 2, pointRadius: 0 }
+                        { label: 'Suhu Air (°C)', data: suhu || [], borderColor: '#f43f5e', tension: 0.35, borderWidth: 2, pointRadius: 0 },
+                        { label: 'TDS (ppm)', data: tds || [], borderColor: '#10b981', tension: 0.35, borderWidth: 2, pointRadius: 0 },
+                        { label: 'Suhu Udara (°C)', data: suhuudara || [], borderColor: '#0ea5e9', tension: 0.35, borderWidth: 2, pointRadius: 0 },
+                        { label: 'Kelembaban (%)', data: kelembaban || [], borderColor: '#6366f1', tension: 0.35, borderWidth: 2, pointRadius: 0 }
                     ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { position: 'top', labels: { font: { size: 11 }, usePointStyle: true } }
+                        legend: { position: 'top', labels: { font: { size: 11, family: 'Plus Jakarta Sans' }, usePointStyle: true } }
                     },
                     scales: {
-                        x: { grid: { display: false }, ticks: { font: { size: 10 }, color: '#94a3b8' } },
-                        y: { beginAtZero: false, grid: { color: '#f1f5f9' }, ticks: { font: { size: 10 }, color: '#94a3b8' } }
+                        x: { grid: { display: false }, ticks: { font: { size: 10, family: 'Plus Jakarta Sans' }, color: '#94a3b8' } },
+                        y: { beginAtZero: false, grid: { color: '#f1f5f9' }, ticks: { font: { size: 10, family: 'Plus Jakarta Sans' }, color: '#94a3b8' } }
                     }
                 }
             });
@@ -196,7 +205,7 @@
                 if (!chart) return;
                 chart.data.labels = waktu;
                 chart.data.datasets[0].data = data;
-                chart.update('none'); // Update smooth tanpa re-animasi penuh
+                chart.update('none');
             };
 
             updateSingleChart(suhuChart, suhu);
@@ -218,7 +227,6 @@
         }
     }
 
-    // Inisialisasi Pertama
     fetch('{{ url('/sensor/live') }}', { cache: 'no-store' })
         .then(res => res.json())
         .then(data => {
@@ -226,7 +234,6 @@
         })
         .catch(err => console.debug('Chart init error:', err));
 
-    // Interval Update Realtime
     setInterval(fetchDataAndUpdateCharts, 10000);
 })();
 </script>

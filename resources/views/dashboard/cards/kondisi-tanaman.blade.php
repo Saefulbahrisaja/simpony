@@ -1,55 +1,57 @@
 {{-- CARD UTAMA KONDISI TANAMAN --}}
-<div id="tanamanAktif" class="glass-card p-6 border border-slate-200/80 shadow-sm rounded-2xl bg-white">
+<div id="tanamanAktif" class="p-6 border border-slate-100 shadow-sm rounded-3xl bg-white hover:shadow-md transition-all duration-300">
     {{-- Header Section --}}
     <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
         <div>
-            <span class="text-xs font-bold uppercase tracking-wider text-emerald-600">Active Crop Status</span>
-            <h3 class="text-xl font-extrabold text-slate-800 flex items-center gap-2 mt-0.5">
+            <span class="text-[11px] font-extrabold uppercase tracking-widest text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-100/60">
+                Active Crop Status
+            </span>
+            <h3 class="text-lg font-black text-slate-800 flex items-center gap-2 mt-2">
                 <i class="fas fa-leaf text-emerald-600"></i>
                 Kondisi Tanaman
             </h3>
         </div>
-        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg shadow-sm border border-emerald-100">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 text-white flex items-center justify-center text-lg shadow-md shadow-emerald-500/20">
             <i class="fas fa-seedling"></i>
         </div>
     </div>
 
-    <div class="space-y-4">
+    <div class="space-y-3.5">
         {{-- Nama Tanaman --}}
-        <div class="flex items-center gap-3 p-3.5 bg-slate-50/80 rounded-xl border border-slate-100 hover:border-slate-200 transition-colors">
-            <div class="w-10 h-10 rounded-lg bg-emerald-100/70 text-emerald-600 flex items-center justify-center shrink-0">
+        <div class="flex items-center gap-3.5 p-3.5 bg-slate-50/70 rounded-2xl border border-slate-100/80 hover:bg-slate-100/60 transition-all duration-200">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center shrink-0">
                 <i class="fas fa-leaf text-base"></i>
             </div>
             <div class="min-w-0 flex-grow">
-                <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Nama Tanaman</p>
-                <p id="namaTanaman" class="text-sm font-bold text-slate-800 truncate mt-0.5">Memuat...</p>
+                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">Nama Tanaman</p>
+                <p id="namaTanaman" class="text-sm font-extrabold text-slate-800 truncate mt-0.5">Memuat...</p>
             </div>
         </div>
 
         {{-- Nama Ilmiah --}}
-        <div class="flex items-center gap-3 p-3.5 bg-slate-50/80 rounded-xl border border-slate-100 hover:border-slate-200 transition-colors">
-            <div class="w-10 h-10 rounded-lg bg-amber-100/70 text-amber-600 flex items-center justify-center shrink-0">
+        <div class="flex items-center gap-3.5 p-3.5 bg-slate-50/70 rounded-2xl border border-slate-100/80 hover:bg-slate-100/60 transition-all duration-200">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center shrink-0">
                 <i class="fas fa-book-bookmark text-base"></i>
             </div>
             <div class="min-w-0 flex-grow">
-                <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Nama Ilmiah</p>
+                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">Nama Ilmiah</p>
                 <p id="namaIlmiah" class="text-sm font-bold text-slate-700 italic truncate mt-0.5">Memuat...</p>
             </div>
         </div>
 
         {{-- Tanggal & Usia Semai --}}
-        <div class="flex items-center gap-3 p-3.5 bg-slate-50/80 rounded-xl border border-slate-100 hover:border-slate-200 transition-colors">
-            <div class="w-10 h-10 rounded-lg bg-sky-100/70 text-sky-600 flex items-center justify-center shrink-0">
+        <div class="flex items-center gap-3.5 p-3.5 bg-slate-50/70 rounded-2xl border border-slate-100/80 hover:bg-slate-100/60 transition-all duration-200">
+            <div class="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-600 flex items-center justify-center shrink-0">
                 <i class="fas fa-calendar-alt text-base"></i>
             </div>
             <div class="min-w-0 flex-grow flex items-center justify-between">
                 <div>
-                    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Tanggal Semai</p>
-                    <p id="tanggalSemai" class="text-sm font-bold text-slate-800 mt-0.5">Memuat...</p>
+                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">Tanggal Semai</p>
+                    <p id="tanggalSemai" class="text-sm font-extrabold text-slate-800 mt-0.5">Memuat...</p>
                 </div>
                 <div class="text-right">
-                    <span class="text-[11px] font-semibold text-slate-400 block">Usia Semai</span>
-                    <span id="usiaSemai" class="inline-block mt-0.5 px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-sky-100 text-sky-700">
+                    <span class="text-[10px] font-bold text-slate-400 block uppercase">Usia Semai</span>
+                    <span id="usiaSemai" class="inline-block mt-0.5 px-2.5 py-0.5 rounded-full text-xs font-black bg-sky-500/10 text-sky-700 border border-sky-200/60">
                         - hari
                     </span>
                 </div>
@@ -57,19 +59,19 @@
         </div>
 
         {{-- Tanggal & Usia Tanam + Progress --}}
-        <div class="p-4 bg-slate-50/80 rounded-xl border border-slate-100 hover:border-slate-200 transition-colors">
-            <div class="flex items-center gap-3 mb-3">
-                <div class="w-10 h-10 rounded-lg bg-emerald-100/70 text-emerald-600 flex items-center justify-center shrink-0">
+        <div class="p-4 bg-slate-50/70 rounded-2xl border border-slate-100/80 hover:bg-slate-100/60 transition-all duration-200">
+            <div class="flex items-center gap-3.5 mb-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center shrink-0">
                     <i class="fas fa-plant-wilt text-base"></i>
                 </div>
                 <div class="min-w-0 flex-grow flex items-center justify-between">
                     <div>
-                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Tanggal Tanam</p>
-                        <p id="tanggalTanam" class="text-sm font-bold text-slate-800 mt-0.5">Memuat...</p>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">Tanggal Tanam</p>
+                        <p id="tanggalTanam" class="text-sm font-extrabold text-slate-800 mt-0.5">Memuat...</p>
                     </div>
                     <div class="text-right">
-                        <span class="text-[11px] font-semibold text-slate-400 block">Usia Tanam</span>
-                        <span id="usiaTanam" class="inline-block mt-0.5 px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-emerald-100 text-emerald-700">
+                        <span class="text-[10px] font-bold text-slate-400 block uppercase">Usia Tanam</span>
+                        <span id="usiaTanam" class="inline-block mt-0.5 px-2.5 py-0.5 rounded-full text-xs font-black bg-emerald-500/10 text-emerald-700 border border-emerald-200/60">
                             - hari
                         </span>
                     </div>
@@ -80,15 +82,15 @@
             <div class="mt-4 pt-3 border-t border-slate-200/60">
                 <div class="flex items-center justify-between text-xs font-bold mb-1.5">
                     <span class="text-slate-600">Progres Masa Tumbuh</span>
-                    <span id="progressPercent" class="text-emerald-600 font-extrabold">0%</span>
+                    <span id="progressPercent" class="text-emerald-600 font-black">0%</span>
                 </div>
-                <div class="w-full bg-slate-200/80 rounded-full h-3.5 p-0.5 overflow-hidden shadow-inner">
+                <div class="w-full bg-slate-200/80 rounded-full h-3 p-0.5 overflow-hidden shadow-inner">
                     <div id="progressBar" 
                          class="h-full rounded-full transition-all duration-700 ease-out bg-gradient-to-r from-emerald-500 to-teal-400 shadow-sm" 
                          style="width: 0%;">
                     </div>
                 </div>
-                <div class="mt-2 text-center">
+                <div class="mt-3 text-center">
                     <span id="fasePertumbuhan" class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 bg-white px-3 py-1 rounded-full border border-slate-200/80 shadow-2xs">
                         Memuat fase...
                     </span>
@@ -101,7 +103,6 @@
 @push('scripts')
 <script>
 (function() {
-    // Safety setter helper
     const setText = (id, text) => {
         const el = document.getElementById(id);
         if (el) el.textContent = text;
@@ -118,16 +119,14 @@
             if (!res.ok) throw new Error(`Gagal mengambil pengaturan (${res.status})`);
             const data = await res.json();
 
-            // Tampilkan ambang batas jika elemen input ada
             setInputValue('tds_min', data.tds_min);
             setInputValue('air_min', data.air_min);
             setInputValue('interval', data.interval);
 
-            // Ambil tanaman aktif
             await fetchTanamanAktif();
         } catch (error) {
             console.debug("Gagal memuat pengaturan:", error);
-            await fetchTanamanAktif(); // Tetap coba ambil tanaman aktif
+            await fetchTanamanAktif();
         }
     }
 
@@ -144,7 +143,6 @@
             if (data.success && data.data) {
                 const tanaman = data.data;
 
-                // Format Tanggal Indonesia
                 const parseTanggalLokal = (dateString) => {
                     if (!dateString) return null;
                     const [year, month, day] = dateString.slice(0, 10).split('-').map(Number);
@@ -160,13 +158,11 @@
                     return tanggal ? tanggal.toLocaleDateString('id-ID', options) : '-';
                 };
 
-                // Tampilkan info dasar
                 setText('namaTanaman', tanaman.nama_tanaman || '-');
                 setText('namaIlmiah', tanaman.nama_ilmiah || '-');
                 setText('tanggalSemai', formatTanggal(tanaman.hst));
                 setText('tanggalTanam', formatTanggal(tanaman.hss));
 
-                // Hitung Usia (Hari)
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
                 const semaiDate = parseTanggalLokal(tanaman.hst);
@@ -189,8 +185,7 @@
                     setText('usiaTanam', '-');
                 }
 
-                // Hitung Progres Pertumbuhan (%)
-                const totalHari = Number(tanaman.masa_tumbuh) || 30; // Default 30 hari jika kosong
+                const totalHari = Number(tanaman.masa_tumbuh) || 30;
                 let progress = Math.min(Math.max((numUsiaTanam / totalHari) * 100, 0), 100);
 
                 const progressBar = document.getElementById('progressBar');
@@ -201,7 +196,6 @@
                 if (progressBar) progressBar.style.width = progressFormatted;
                 if (progressPercent) progressPercent.textContent = progressFormatted;
 
-                // Set Warna & Deskripsi Fase
                 if (faseLabel && progressBar) {
                     if (progress < 25) {
                         progressBar.className = "h-full rounded-full transition-all duration-700 ease-out bg-gradient-to-r from-sky-400 to-blue-500 shadow-sm";
@@ -214,11 +208,10 @@
                         faseLabel.innerHTML = "🌼 <span class='text-amber-700'>Fase Pembungaan / Matang</span>";
                     } else {
                         progressBar.className = "h-full rounded-full transition-all duration-700 ease-out bg-gradient-to-r from-emerald-600 to-green-600 shadow-sm animate-pulse";
-                        faseLabel.innerHTML = "🥬 <span class='text-emerald-800 font-extrabold'>Siap Panen!</span>";
+                        faseLabel.innerHTML = "🥬 <span class='text-emerald-800 font-black'>Siap Panen!</span>";
                     }
                 }
 
-                // Panggil fungsi pembantu prediksi panen jika ada
                 if (typeof updatePrediksiPanen === 'function') {
                     updatePrediksiPanen(tanaman, tanamDate);
                 }
@@ -250,7 +243,6 @@
         if (progressBar) progressBar.style.width = '0%';
     }
 
-    // Eksekusi saat DOM Siap
     window.addEventListener('tanaman-list-updated', fetchPengaturan);
     window.addEventListener('tanaman-aktif-updated', fetchPengaturan);
     if (document.readyState === 'loading') {
