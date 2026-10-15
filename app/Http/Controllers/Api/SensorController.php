@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Api;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SensorData;
@@ -9,6 +7,11 @@ use App\Models\Pengaturan;
 use Illuminate\Http\JsonResponse;
 use App\Models\Tanaman;
 use Illuminate\Support\Facades\Validator;
+
+// TAMBAHAN: Integrasi ALFDA
+use App\Models\AlfdaDecision;
+use App\Services\AlfdaService;
+use Illuminate\Support\Facades\Log;
 
 class SensorController extends Controller
 {
@@ -74,6 +77,40 @@ class SensorController extends Controller
             'tanaman_id'    => $tanamanAktifId, // <<— disimpan otomatis
         ]);
 
+        // =====================================================
+        // TAMBAHAN BARU: PERHITUNGAN ALFDA OTOMATIS
+        // =====================================================
+        // Dijalankan setelah data sensor berhasil disimpan.
+        // ALFDA hanya menghasilkan rekomendasi (shadow mode).
+        // Tidak ada perintah untuk mengaktifkan pompa.
+        // =====================================================
+
+        try {
+            // Hitung keputusan berdasarkan data sensor terbaru
+            $result = app(AlfdaService::class)->evaluate($sensor);
+
+            // Simpan hasil keputusan ke database
+            AlfdaDecision::updateOrCreate(
+                ['sensor_data_id' => $sensor->id],
+                array_merge($result, [
+                    'tanaman_id' => $sensor->tanaman_id,
+                    'mode' => 'shadow',
+                ])
+            );
+
+        } catch (\Throwable $e) {
+            // Jika ALFDA gagal, data sensor tetap tersimpan.
+            // Detail error dicatat pada log Laravel.
+            Log::error('ALFDA inference failed', [
+                'sensor_data_id' => $sensor->id,
+                'error' => $e->getMessage(),
+            ]);
+        }
+
+        // =====================================================
+        // AKHIR TAMBAHAN ALFDA
+        // =====================================================
+
         return response()->json([
             'success' => true,
             'data' => $sensor
@@ -84,7 +121,7 @@ class SensorController extends Controller
     {
         $tdsMin   = Pengaturan::where('nama', 'tds_min')->value('nilai') ?? 700;
         $airMin   = Pengaturan::where('nama', 'air_min')->value('nilai') ?? 10;
-        $interval = Pengaturan::where('nama', 'interval')->value('nilai') ?? 10; 
+        $interval = Pengaturan::where('nama', 'interval')->value('nilai') ?? 10;
         $tanamanAktif = Pengaturan::where('nama', 'tanaman_aktif')->value('nilai')
             ?? Tanaman::where('status', 'aktif')->value('id');
 
@@ -144,7 +181,7 @@ class SensorController extends Controller
         ]);
     }
 
-/**
+    /**
      * Ambil detail tanaman aktif dari tabel tanaman
      */
     public function getTanamanAktif(): JsonResponse
